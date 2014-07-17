@@ -256,6 +256,10 @@ namespace UpdatingUserObjectDemo.Controllers
         // GET: /Account/Manage
         public ActionResult Manage(ManageMessageId? message)
         {
+            var currentUserId = User.Identity.GetUserId();
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            var bday = currentUser.BirthDate;
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -263,6 +267,7 @@ namespace UpdatingUserObjectDemo.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
+            ViewBag.BirthDate = bday;
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
@@ -276,6 +281,9 @@ namespace UpdatingUserObjectDemo.Controllers
             bool hasPassword = HasPassword();
             ViewBag.HasLocalPassword = hasPassword;
             ViewBag.ReturnUrl = Url.Action("Manage");
+
+           
+
             if (hasPassword)
             {
                 if (ModelState.IsValid)
