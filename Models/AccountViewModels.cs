@@ -64,7 +64,7 @@ namespace UpdatingUserObjectDemo.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        public System.DateTime DateOfBirth { get; set; }
+        public System.DateTime BirthDate { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
